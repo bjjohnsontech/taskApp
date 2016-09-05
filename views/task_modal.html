@@ -1,0 +1,44 @@
+<form name='taskForm' novalidate>
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">{{$ctrl.kind}} task <span ng-if='$ctrl.name'>{{$ctrl.name}}</span></h2>
+    </div>
+    <div class="modal-body container-fluid" id="modal-body">
+        <div class='col-md-1'>Required:</div>
+        <div class='row'></div>
+        <div class='col-md-2 col-md-offset-1 form-group'>
+            <label>Title:</label>
+            <input type='text' name='title' ng-model='$ctrl.title' required/>
+            <p ng-show="taskForm.title.$touched && taskForm.title.$invalid" class="help-block">A title is required.</p>
+        </div>
+        <div class='col-md-6 form-group'>
+            <label>Description:</label>
+            <textarea name='description' ng-model='$ctrl.description' required ng-minlength='30' ng-maxlength='255'/>
+            <p ng-show="taskForm.description.$touched && taskForm.description.$error.required" class="help-block">A description is required.</p>
+            <p ng-show="taskForm.description.$error.minlength" class="help-block">Description is too short. (&lt;30 chars)></p>
+            <p ng-show="taskForm.description.$error.maxlength" class="help-block">Description is too long. (&gt;255 chars)</p>
+        </div>
+        <div class='row'></div>
+        <div class='col-md-1'>Optional:</div>
+        <div class='row'></div>
+        <div class='col-md-2  col-md-offset-1 form-group'>
+            <label>Assign:</label>
+            <input type='text' name='assign' ng-model='$ctrl.assign'/>
+        </div>
+        <div class='col-md-2 form-group'>
+            <label>Due:</label>
+            <input type='text' name='due' ng-model='$ctrl.due'/>
+        </div>
+        <div class='col-md-2 form-group'>
+            <label>Relies On:</label>
+            <input type='text' name='block' ng-model='$ctrl.block' required/>
+        </div>
+        <div class='col-md-2 form-group'>
+            <label>Estimate:</label>
+            <input type='text' name='estimate' ng-model='$ctrl.estimate' required/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled='taskForm.$invalid' ng-click="$ctrl.save(taskForm.$valid)">Save</button>
+        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+    </div>
+</form>

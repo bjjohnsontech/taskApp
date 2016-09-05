@@ -1,0 +1,39 @@
+<v-pane>
+    <v-pane-header>
+            {{ pane.label}} - {{ pane.name }}
+            <span class='floatR marginR-25'>{{ +(pane.work_complete/60).toFixed(2) || 0 }} / {{ pane.estimate/60 }} hrs</span>
+    </v-pane-header>
+    
+    <v-pane-content>
+        <div class='col-md-11'>{{ pane.description }}</div>
+        <div class='col-md-1'>
+            <button class='btn btn-xsm btn-primary floatR'>Edit</button>
+        </div>
+        <div class='row'></div>
+        <div class='col-md-1'>Assigned:</div>
+        <div class='col-md-2'>{{pane.assigned}}</div>
+        <div class='col-md-1'>Completed:</div>
+        <div class='col-md-2'>{{pane.completed}}</div>
+        <div class='col-md-2'>Blocked By:</div>
+        <div class='col-md-2'>{{pane.blocked.name}}</div>
+        
+        <div class='row'><hr/></div>
+        <div class='col-md-2 col-md-offset-7'>Work Recorded</div>
+        <div class='col-md-3'><button class='btn btn-xsm btn-primary floatR'>Record Work</button></div>
+        <div class='col-md-12' ng-if="pane.work.length" ng-repeat="work in pane.work">
+            <div class='row'></div>
+            <div class='col-md-1 col-md-offset-7'>{{work.user}}</div>
+            <div class='col-md-2'>{{work.start_time}}</div>
+            <div class='col-md-2' ng-show='work.end_time'>{{work.end_time}}</div>
+            <div class='col-md-2' ng-hide='work.end_time'><button class='btn btn-xsm btn-danger'>Stop Recording</button></div>
+        </div>
+        <div class='row'></div>
+        <div class='col-md-2'><button class='btn btn-xsm btn-success'>Add Child Task</button></div>
+        <div class='col-md-4 col-md-offset-6'><button class='btn btn-xsm btn-success'>Start Recording</button></div>
+        <div class='row'></div>
+        <!-- accordions can be nested :) -->
+        <v-accordion ng-if="pane.children.length" multiple>
+            <div ng-repeat="pane in pane.children" ng-include="'views/panes.html'"></div>
+        </v-accordion>
+    </v-pane-content>
+</v-pane>

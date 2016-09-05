@@ -1,0 +1,204 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #222;
+    color: #EEE;
+}
+.marginR-25 {
+    margin-right: 25px;
+}
+
+.floatR {
+    float: right;
+}
+
+.floatL {
+    float: left;
+}
+
+.textR {
+    text-align: right;
+}
+
+.textC {
+    text-align: center;
+}
+
+.btn-xsm {
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1.25;
+    padding: 1px 5px;
+}
+div.modal-content{
+    background-color: #333;
+}
+
+form input{
+    color: #333;
+}
+
+form textarea{
+    color: #333;
+    width: 100%;
+    resize: none;
+    height: 90px;
+}
+
+@media (max-width:768px){
+    .col-xs-0 {
+        display: none;
+    }
+}
+
+@media (max-width:992px){
+    .col-sm-0 {
+        display: none;
+    }
+}
+
+@media (max-width:1150px){
+    .col-md-0 {
+        display: none;
+    }
+}
+.wrapper {
+    min-height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+/* header */
+#header {
+    border-bottom: 2px solid #EEE;
+}
+
+img.rht {
+    background: #EEE;
+}
+
+.socialButtons {
+    z-index: 1000;
+    height: 15px;
+}
+.socialButtons div {
+    float: right !important;
+    display: inline;
+}
+
+.height-30 {
+    height: 30px;
+}
+
+/* content */
+#content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#content p {
+    margin: 0 0 0 15px;
+}
+
+.cert {
+    width: 200px;
+    display: block;
+    margin: 10px 10px;
+}
+
+@media (min-width:510px) {
+    .footerSpace {
+        height: 120px;
+    }
+}
+
+@media (max-width:509px) {
+    .footerSpace{
+        height: 160px;
+    }
+}
+
+@media (max-width:479px) {
+    .footerSpace{
+        height: 180px;
+    }
+}
+
+#tasksDiv {
+    height: 100%;
+    
+}
+/* footer */
+
+#footer {
+    background: #222;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    bottom: 0px;
+    position: absolute;
+}
+
+@media (max-width: 991px) {
+    #footer {
+        width: 100%;
+    }
+}
+
+#footer hr {
+    border: none;
+    height: 10px;
+    /* Set the hr color */
+    color: #EEE; /* old IE */
+    background: -webkit-linear-gradient(#EEE, #444); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#EEE, #444); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#EEE, #444); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#EEE, #444); /* Standard syntax */
+    border-radius: 10px;
+    margin: 0;
+}
+
+.nav {
+    font-size: 200%;
+}
+
+.nav a {
+    color: #EEE;
+}
+
+.nav ul {
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.nav ul li {
+    display: inline-block;
+    
+}
+
+.nav a:link, .nav a:visited {
+    color: #EEE;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: #00A;
+}
+
+.nav a.fa {
+    margin: 5px 50%;
+}
+
+.nav a.selected {
+    color: #555;
+}
+
+@media (max-width: 479px) {
+    .col-xxs-12 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+        width: 100%;
+    }
+}
