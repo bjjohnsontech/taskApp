@@ -1,13 +1,13 @@
 <form name='taskForm' novalidate>
     <div class="modal-header">
-        <h2 class="modal-title" id="modal-title">{{$ctrl.kind}} task <span ng-if='$ctrl.name'>{{$ctrl.name}}</span></h2>
+        <h2 class="modal-title" id="modal-title">{{$ctrl.kind}} task<span ng-if='$ctrl.name'> &mdash; {{$ctrl.name}}</span></h2>
     </div>
     <div class="modal-body container-fluid" id="modal-body">
         <div class='col-md-1'>Required:</div>
         <div class='row'></div>
         <div class='col-md-2 col-md-offset-1 form-group'>
             <label>Title:</label>
-            <input type='text' name='title' ng-model='$ctrl.title' required/>
+            <input type='text' name='title' ng-model='$ctrl.name' required/>
             <p ng-show="taskForm.title.$touched && taskForm.title.$invalid" class="help-block">A title is required.</p>
         </div>
         <div class='col-md-6 form-group'>
@@ -22,7 +22,7 @@
         <div class='row'></div>
         <div class='col-md-2  col-md-offset-1 form-group'>
             <label>Assign:</label>
-            <input type='text' name='assign' ng-model='$ctrl.assign'/>
+            <input type='text' name='assign' ng-model='$ctrl.assigned'/>
         </div>
         <div class='col-md-2 form-group'>
             <label>Due:</label>

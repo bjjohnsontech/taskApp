@@ -7,7 +7,7 @@
     <v-pane-content>
         <div class='col-md-11'>{{ pane.description }}</div>
         <div class='col-md-1'>
-            <button class='btn btn-xsm btn-primary floatR'>Edit</button>
+            <button ng-click="task(pane.id, pane.name, 'Edit')" class='btn btn-xsm btn-primary floatR'>Edit</button>
         </div>
         <div class='row'></div>
         <div class='col-md-1'>Assigned:</div>
@@ -28,7 +28,7 @@
             <div class='col-md-2' ng-hide='work.end_time'><button class='btn btn-xsm btn-danger'>Stop Recording</button></div>
         </div>
         <div class='row'></div>
-        <div class='col-md-2'><button class='btn btn-xsm btn-success'>Add Child Task</button></div>
+        <div class='col-md-2'><button ng-click="task(pane.id, pane.name, 'Add')" class='btn btn-xsm btn-success'>Add Child Task</button></div>
         <div class='col-md-4 col-md-offset-6'><button class='btn btn-xsm btn-success'>Start Recording</button></div>
         <div class='row'></div>
         <!-- accordions can be nested :) -->

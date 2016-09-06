@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class='col-md-10' id='tasksDiv' ng-controller="taskAppController">
             <div class='col-md-11'><h3>Task App:</h3></div>
-            <div class='col-md-1'><button class='btn btn-xsm btn-success' ng-click='newTask()'>Add Task</button></div>
+            <div class='col-md-1'><button class='btn btn-xsm btn-success' ng-click="task(null, null, 'Add')">Add Task</button></div>
             <div class='row col-md-12'>
                 <v-accordion class="vAccordion--default" multiple>
                     <div ng-repeat="pane in tasks" ng-include="'views/panes.html'"></div>
