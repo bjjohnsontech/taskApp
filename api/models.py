@@ -1,6 +1,6 @@
 from peewee import *
-
-database = MySQLDatabase('taskApp', **{'password': 'OUseeI8@task!', 'user': 'task_user'})
+from config import user, password
+database = MySQLDatabase('taskApp', **{'password': password, 'user': user})
 
 class UnknownField(object):
     def __init__(self, *_, **__): pass
