@@ -23,8 +23,8 @@ class Task(BaseModel):
         db_table = 'task'
 
 class Work(BaseModel):
-    end_time = DateTimeField(null=True)
-    start_time = DateTimeField(null=True)
+    end_time = DateTimeField()
+    start_time = DateTimeField()
     task = ForeignKeyField(db_column='task_id', null=True, rel_model=Task, to_field='id')
     user = CharField(null=True)
     class Meta:

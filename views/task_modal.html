@@ -1,40 +1,47 @@
 <form name='taskForm' novalidate>
     <div class="modal-header">
-        <h2 class="modal-title" id="modal-title">{{$ctrl.kind}} task<span ng-if='$ctrl.name'> &mdash; {{$ctrl.name}}</span></h2>
+        <h2 class="modal-title" id="modal-title">{{$ctrl.kind}} task<span ng-if='$ctrl.task.name'> &mdash; {{$ctrl.task.name}}</span></h2>
     </div>
     <div class="modal-body container-fluid" id="modal-body">
         <div class='col-md-1'>Required:</div>
         <div class='row'></div>
-        <div class='col-md-2 col-md-offset-1 form-group'>
+        <div class='col-md-3 col-md-offset-1'>
             <label>Title:</label>
-            <input type='text' name='title' ng-model='$ctrl.name' required/>
+            <input type='text' name='title' ng-model='$ctrl.task.name' required/>
             <p ng-show="taskForm.title.$touched && taskForm.title.$invalid" class="help-block">A title is required.</p>
         </div>
-        <div class='col-md-6 form-group'>
+        <div class='col-md-8 form-group'>
             <label>Description:</label>
-            <textarea name='description' ng-model='$ctrl.description' required ng-minlength='30' ng-maxlength='255'/>
+            <textarea name='description' ng-model='$ctrl.task.description' required ng-minlength='30' ng-maxlength='255'/>
             <p ng-show="taskForm.description.$touched && taskForm.description.$error.required" class="help-block">A description is required.</p>
             <p ng-show="taskForm.description.$error.minlength" class="help-block">Description is too short. (&lt;30 chars)></p>
             <p ng-show="taskForm.description.$error.maxlength" class="help-block">Description is too long. (&gt;255 chars)</p>
         </div>
         <div class='row'></div>
+        <div class='col-md-3 col-md-offset-1'>
+            <label>Label:</label>
+            <input type='text' name='label' ng-model='$ctrl.task.label' required/>
+            <p ng-show="taskForm.label.$touched && taskForm.label.$invalid" class="help-block">Label is required.</p>
+        </div>
+        <div class='col-md-3 form-group'>
+            <label>Estimate:</label>
+            <input type='text' name='estimate' ng-model='$ctrl.task.estimate' required/>
+            <p ng-show="taskForm.estimate.$touched && taskForm.estimate.$error.required" class="help-block">Please include an estimate.</p>
+        </div>
+        <div class='row'></div>
         <div class='col-md-1'>Optional:</div>
         <div class='row'></div>
-        <div class='col-md-2  col-md-offset-1 form-group'>
+        <div class='col-md-3  col-md-offset-1 form-group'>
             <label>Assign:</label>
-            <input type='text' name='assign' ng-model='$ctrl.assigned'/>
+            <input type='text' name='assign' ng-model='$ctrl.task.assigned'/>
         </div>
-        <div class='col-md-2 form-group'>
+        <div class='col-md-3 form-group'>
             <label>Due:</label>
-            <input type='text' name='due' ng-model='$ctrl.due'/>
+            <input type='text' name='due' ng-model='$ctrl.task.due'/>
         </div>
-        <div class='col-md-2 form-group'>
+        <div class='col-md-3 form-group'>
             <label>Relies On:</label>
-            <input type='text' name='block' ng-model='$ctrl.block' required/>
-        </div>
-        <div class='col-md-2 form-group'>
-            <label>Estimate:</label>
-            <input type='text' name='estimate' ng-model='$ctrl.estimate' required/>
+            <input type='text' name='block' ng-model='$ctrl.task.block'/>
         </div>
     </div>
     <div class="modal-footer">

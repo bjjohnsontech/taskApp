@@ -5,6 +5,7 @@ import json
 from functools import wraps
 from playhouse.shortcuts import model_to_dict, dict_to_model
 import datetime
+import re
 
 def databaseCon(f):
     @wraps(f)
@@ -59,6 +60,21 @@ def get_tasks(id=None, parent=None, top=None):
         total_work += task['work_complete'] # track total time for this task for parent
     return {'total_work': total_work, 'tasks': taskL}
 
+
+def time(ts):
+    time_match = re.findall(r"([0-9.]+)([a-z]+)", ts, re.I)
+    mins = 0
+    if time_match:
+        for amount, delim in time_match:
+            if delim.lower() == 'd':
+                # a day is only 8 hours
+                mins += int(amount) * 8 * 60
+            elif delim.lower() == 'h':
+                mins += int(amount) * 60
+            elif delim.lower() == 'm':
+                mins += int(amount)
+    return mins
+
 @app.route('/task/', methods=['GET'])
 @app.route('/task/<taskID>', methods=['GET'])
 @databaseCon
@@ -71,9 +87,9 @@ def get_task(taskID=None):
     else:
         data = request.args
         if 'parent' in data:
-            return json.dumps(get_tasks(parent=data['parent']), default=jsaon_serial)
+            return json.dumps(get_tasks(parent=data['parent']), default=json_serial)
         else:
-            return json.dumps(get_tasks(), default=jsaon_serial)
+            return json.dumps(get_tasks(), default=json_serial)
 
 @app.route('/task/', methods=['POST'])
 @app.route('/task/<taskID>', methods=['PUT', 'DELETE'])
@@ -83,6 +99,7 @@ def do_task(taskID=None):
         if request.method == 'DELETE':
             task = Task.delete().where(Task.id == taskID)
             task.execute()
+            return 'Success', 200
         elif request.method == 'PUT':
             data = request.args
             task = Task.select().where(Task.id == taskID)
@@ -102,17 +119,63 @@ def do_task(taskID=None):
                 task.label = data['label']
             if 'assigned' in data and data['assigned'] != row['assigned']:
                 task.assigned = data['assigned']
-            if 'estimate' in data and data['estimate'] != row['estimate']:
-                task.estimate = data['estimate']
+            if 'estimate' in data:
+                estimate = time(data['estimate'])
+                if estimate != row['estimate']:
+                    task.estimate = estimate
+            task.save()
     else:
-        data = request.args
+        data = request.get_json()
         task = Task(
             name = data.get('name', None),
             description = data.get('description', None),
-            parent = data.get('parent', None),
-            completed = data.get('completed', None),
-            block = data.get('block', None),
+            parent = data.get('parent', None) or None, # make sure None instead of ''
+            completed = data.get('completed', None) or None, # make sure None instead of ''
+            block = data.get('block', None) or None, # make sure None instead of ''
             label = data.get('label', None),
             assigned = data.get('assigned', None),
-            estimate = data.get('estimate ', None)
+            estimate = time(data.get('estimate', '0m'))
         )
+        task.save()
+    return json.dumps(model_to_dict(task), default=json_serial)
+
+@app.route('/work/', methods=['POST'])
+@app.route('/work/<workID>', methods=['PUT', 'DELETE'])
+@databaseCon
+def do_work(workID=None):
+    if workID:
+        if request.method == 'DELETE':
+            work = Work.delete().where(Work.id == workID)
+            work.execute()
+            return 'Success', 200
+        elif request.method == 'PUT':
+            data = request.get_json()
+            work = Work.get(Work.id == workID)
+            row = model_to_dict(work)
+            start = data.get('start_time', None)
+            if start and start != row['start_time']:
+                start = datetime.datetime.strptime(start.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+                work.start_time = start
+            end = data.get('end_time', None)
+            print end
+            if end and end != row['end_time']:
+                end = datetime.datetime.strptime(end.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+                work.end_time = end
+                print end
+            work.save()
+    else:
+        data = request.get_json()
+        start = data.get('start_time', None)
+        if start:
+            start = datetime.datetime.strptime(start.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+        end = data.get('end_time', None)
+        if end:
+            end = datetime.datetime.strptime(end.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+        work = Work(
+            start_time = start,
+            end_time = end,
+            task = data.get('task', None) or None, # make sure None instead of ''
+            user = 'bjohnson'#data.get('user', None) or None, # make sure None instead of ''
+        )
+        work.save()
+    return json.dumps(model_to_dict(work), default=json_serial)
